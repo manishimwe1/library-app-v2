@@ -1,0 +1,72 @@
+:root {
+  --primary-color: #1e3a5f;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden;
+}
+.form-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 15px;
+  width: 300px;
+}
+.form-container form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.form-input {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+  position: relative;
+}
+
+.form-input label {
+  font-size: 14px;
+  font-weight: 600;
+}
+.form-input input {
+  padding: 8px 12px;
+  border: 1px solid gray;
+  border-radius: 6px;
+  font-size: 14px;
+  
+}
+
+.submit-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--primary-color);
+  padding: 8px 12px;
+  color: white;
+  cursor: pointer;
+  border-radius: 6px;
+  font-size: 16px;
+}
+
+/* #password {
+  position: relative;
+} */
+
+.eye {
+  position: absolute;
+  right: 4px;
+  top: 25px;
+}
+#message {
+  color: red;
+  font-size: 16px;
+  font-weight: 600;
+}

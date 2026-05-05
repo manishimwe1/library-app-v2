@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="sign-up.css" />
+    <title>Sign up page</title>
+  </head>
+  <body>
+    <main class="container">
+      <div class="form-container">
+        <h1>Sign up to continue</h1>
+        <form id="submitForm">
+          <div class="form-input">
+            <label for="username">Username</label>
+            <input type="text" id="username" />
+          </div>
+          <div class="form-input">
+            <label for="email">Email</label>
+            <input type="text" id="email" />
+          </div>
+          <div class="form-input">
+            <label for="password">Password</label>
+            <input type="password" id="password" />
+            <div class="eye">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-eye-icon lucide-eye"><path d="M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0"/><circle cx="12" cy="12" r="3"/></svg>
+            </div>
+          </div>
+          <div class="form-input">
+            <label for="confirm-password">confirm-password</label>
+            <input type="password" id="confirm-password" />
+          </div>
+          <button type="submit" class="submit-btn">Sign up</button>
+        </form>
+        <p id="message"></p>
+        <p>
+          already have an account <span><a href="">Sign in</a></span>
+        </p>
+      </div>
+    </main>
+
+    <script src="./sign-up.js"></script>
+  </body>
+</html>
