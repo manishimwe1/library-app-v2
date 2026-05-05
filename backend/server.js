@@ -119,23 +119,72 @@ app.post("/api/sign-up", (req, res) => {
 });
 
 app.post("/api/books", (req, res) => {
-  const { name, description, author, price, image } = req.body;
+  const { name, description, author, price, image, category } = req.body;
 
   if (!name || !description || !author || !price || !image) {
     return res.status(400).json("all fields are required");
   }
 
+  console.log(category);
+  
+
   const query = `INSERT INTO books (name,description,author,price,image) VALUES (?,?,?,?,?)`;
 
-  db.run(query, [name, description, author, price, image], (err) => {
+  db.run(query, [name, description, author, price, image], function (err) {
     if (err) {
       console.log("error in creating books");
+      return res.status(400).json({ message: "error in creating books" });
     } else {
       console.log("added book in db successfuly");
-      res.status(201).json("added book in db successfuly");
+
+      const bookId = this.lastID;
+
+      const existCategoryQuery = `SELECT * FROM categories WHERE name = ?`;
+
+      db.get(existCategoryQuery, [category], (err, row) => {
+        if (err) {
+          console.log("error in getting category books");
+          return res.status(400).json({ message: "error in getting category" });
+        }
+
+        let categoryId;
+
+        if (row) {
+          categoryId = row.id;
+          linkBookToCategory(categoryId, bookId, res);
+        } else {
+          const categoryQuery = `INSERT INTO categories (name) VALUES (?)`;
+          db.run(categoryQuery, [category], function (err) {
+            console.log(category);
+
+            if (err) {
+              console.log("error in creating category", err);
+              return res.status(400).json({ message: "error in creating category" });
+            }
+
+            categoryId = this.lastID;
+
+            linkBookToCategory(categoryId, bookId, res);
+          });
+        }
+      });
     }
   });
 });
+
+function linkBookToCategory(bookId, categoryId, res) {
+  const linkQuery = `INSERT INTO book_categories (book_id,category_id) VALUES (?,?)`;
+
+  db.run(linkQuery, [bookId, categoryId], (err) => {
+    if (err) {
+      console.log("something went wrong inserting book category");
+      return res.status(400).json({ message: "error linking book to category" });
+    }
+    return res
+      .status(201)
+      .json({ message: "book created successfuly", id: bookId });
+  });
+}
 
 app.get("/api/books", (req, res) => {
   const query = `SELECT * FROM books`;
