@@ -257,7 +257,7 @@ async function deleteBook(bookId) {
         alert("error in deleting book");
       }
     } catch (error) {
-      console.log(error);
+      console.log("error in deleting book",error);
     }
 }
 
