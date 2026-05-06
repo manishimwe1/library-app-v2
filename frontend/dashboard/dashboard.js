@@ -24,6 +24,18 @@ let currentBookId = null;
 let categories = [];
 let addedCategory;
 
+function getAuthToken() {
+  const token = localStorage.getItem("userSession");
+  const headers = { "CONTENT-TYPE": "application/json" };
+
+  if (token) {
+    headers["Authorization"] = `Bearer ${token}`;
+  }
+
+  console.log(headers);
+  return headers;
+}
+
 function showEmptyState() {
   emptyState.classList.add("show");
   booksTable.style.display = "none";
@@ -98,15 +110,12 @@ async function handleBookSubmit(e) {
     if (!categorySelect) {
       return console.log("no selected category", categorySelect);
     } else {
-
       // console.log(addedCategory);
-      
+
       try {
         const response = await fetch(`${API_URL}/books`, {
           method: "POST",
-          headers: {
-            "CONTENT-TYPE": "application/json",
-          },
+          headers: getAuthToken(),
           body: JSON.stringify({
             name: nameInput,
             description: descInput,
@@ -142,9 +151,7 @@ async function handleUpdateBook(bookId) {
   try {
     const response = await fetch(`${API_URL}/books/${bookId}`, {
       method: "PUT",
-      headers: {
-        "CONTENT-TYPE": "application/json",
-      },
+      headers: getAuthToken(),
       body: JSON.stringify({
         name: nameInput,
         description: descInput,
@@ -251,6 +258,7 @@ async function deleteBook(bookId) {
 
       const response = await fetch(`${API_URL}/books/${bookId}`, {
         method: "DELETE",
+        headers: getAuthToken(),
       });
 
       if (response.ok) {
@@ -260,7 +268,7 @@ async function deleteBook(bookId) {
         alert("error in deleting book");
       }
     } catch (error) {
-      console.log("error in deleting book",error);
+      console.log("error in deleting book", error);
     }
 }
 
@@ -272,7 +280,6 @@ async function handleCategorySubmit(e) {
   const categoryDescription = document.getElementById(
     "category-description",
   ).value;
-
 
   addedCategory = categoryName.value;
   categoryForm.reset();
