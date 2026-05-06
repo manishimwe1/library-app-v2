@@ -186,6 +186,17 @@ function linkBookToCategory(bookId, categoryId, res) {
   });
 }
 
+app.get("/api/category", (req, res) => {
+  const query = `SELECT * FROM categories`;
+
+  db.all(query, [], (err, rows) => {
+    if (err) {
+      console.log("something went wrong getting books");
+      return;
+    }
+    return res.status(200).json(rows);
+  });
+});
 app.get("/api/books", (req, res) => {
   const query = `SELECT * FROM books`;
 

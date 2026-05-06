@@ -98,6 +98,9 @@ async function handleBookSubmit(e) {
     if (!categorySelect) {
       return console.log("no selected category", categorySelect);
     } else {
+
+      // console.log(addedCategory);
+      
       try {
         const response = await fetch(`${API_URL}/books`, {
           method: "POST",
@@ -110,7 +113,7 @@ async function handleBookSubmit(e) {
             author: authorInput,
             price: priceInput,
             image: imageSrc,
-            category: categorySelect,
+            category: addedCategory,
           }),
         });
 
@@ -269,6 +272,7 @@ async function handleCategorySubmit(e) {
   const categoryDescription = document.getElementById(
     "category-description",
   ).value;
+
 
   addedCategory = categoryName.value;
   categoryForm.reset();
